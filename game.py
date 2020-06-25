@@ -65,8 +65,7 @@ class ScoreRating:
 player_name = input('Enter your name: > ')
 print("Hello, " + player_name)
 
-
-deck = input('Input your game deck, left empty for standard').split()
+deck = input('\nInput your game deck or left empty for standard: >').split()
 if not deck:
     deck = ['rock', 'paper', 'scissors']
 print("Okay, let's start")
@@ -80,13 +79,14 @@ while player_chose != "!exit":
         print(f"Your rating: {table.player_score}")
     elif player_chose in set(deck):
         computer_chose = deck[random.randint(0, len(deck)) - 1]
-        if deck.index(computer_chose) - deck.index(player_chose) \
-                in (set(range(1, int((len(deck) - 1) / 2) + 1))
-                    or set(range(-len(deck) + 1, - (int((len(deck) - 2) / 2) + 1)))):
+        if deck.index(computer_chose) - deck.index(player_chose) in set(range(1, int((len(deck) - 1) / 2) + 1)) \
+                or deck.index(computer_chose) - deck.index(player_chose) \
+                in set(range(-len(deck) + 1, - (int((len(deck) - 2) / 2) + 1))):
             print(f"Sorry, but computer chose {computer_chose}")
         elif deck.index(computer_chose) - deck.index(player_chose) \
-                in (set(range(int((len(deck) - 1) / 2) + 1, len(deck)))
-                    or set(range(-(int((len(deck) - 2) / 2) + 1), 0))):
+                in set(range(int((len(deck) - 1) / 2) + 1, len(deck))) \
+                or deck.index(computer_chose) - deck.index(player_chose) \
+                in set(range(-(int((len(deck) - 2) / 2) + 1), 0)):
             print(f"Well done. Computer chose {computer_chose} and failed")
             table.player_score += 100
         else:
