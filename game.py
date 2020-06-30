@@ -22,44 +22,39 @@ class ScoreRating:
 
     def is_rating_file_exist(self):
         try:
-            open(self.file_name, 'r')
-            return True
+            with open(self.file_name, 'r') as _f:
+                return True
         except FileNotFoundError:
             return False
 
     def make_new_rating_file(self):
-        rating = open(self.file_name, 'w')
-        rating.write(" ")
-        rating.close()
+        with open(self.file_name, 'w') as rating:
+            rating.write(" ")
 
     def is_player_on_list(self):
-        rating = open(self.file_name, 'r')
-        for line in rating:
-            if self.player_name in set(line.split()):
-                rating.close()
-                return True
-        rating.close()
-        return False
+        with open(self.file_name, 'r') as rating:
+            for line in rating:
+                if self.player_name in set(line.split()):
+                    return True
+            return False
 
     def add_new_player(self):
         self.rating_list.append(f"{self.player_name} {self.player_score}\n")
         self.player_position = len(self.rating_list) - 1
 
     def read_rating_list(self):
-        rating = open(self.file_name, 'r')
-        for line in rating.readlines():
-            self.rating_list.append(line)
-            if self.player_name in set(line.split()):
-                self.player_position = len(self.rating_list) - 1
-                self.player_score = int(self.rating_list[self.player_position].split()[1])
-        rating.close()
-        return
+        with open(self.file_name, 'r') as rating:
+            for line in rating.readlines():
+                self.rating_list.append(line)
+                if self.player_name in set(line.split()):
+                    self.player_position = len(self.rating_list) - 1
+                    self.player_score = int(self.rating_list[self.player_position].split()[1])
+            return
 
     def save_rating_list(self):
-        rating = open(self.file_name, 'w')
-        self.rating_list[self.player_position] = f"{self.player_name} {self.player_score}\n"
-        rating.writelines(self.rating_list)
-        rating.close()
+        with open(self.file_name, 'w') as rating:
+            self.rating_list[self.player_position] = f"{self.player_name} {self.player_score}\n"
+            rating.writelines(self.rating_list)
 
 
 player_name = input('Enter your name: > ')
